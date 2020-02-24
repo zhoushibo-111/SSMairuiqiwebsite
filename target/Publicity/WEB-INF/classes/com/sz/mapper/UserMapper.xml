@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.mapper.UserMapper">
+    <select id="queryUserDate"  parameterType="int" resultType="com.sz.pojo.User">
+        select id,username,password,loginfrequency,logintime,role from user
+        where id = #{id}
+    </select>
+    <select id="countUser" resultType="java.lang.Integer">
+        select count(*) from user
+    </select>
+
+    <insert id="addUser" keyProperty="id" useGeneratedKeys="true" parameterType="com.sz.pojo.User">
+    insert into user (id,username,password,loginfrequency,logintime)
+    values (default ,#{username},#{password},#{loginfrequency},NOW())
+    </insert>
+    <update id="updataUser" parameterType="com.sz.pojo.User">
+        update user set username=#{username} ,password=#{password}
+        where id = #{id}
+    </update>
+    <delete id="delUser" parameterType="java.lang.Integer">
+        delete from user
+        where id = #{id}
+    </delete>
+    <select id="queryDateUserById" resultType="com.sz.pojo.User">
+        select id,username,password,loginfrequency from user
+        where id = #{id}
+    </select>
+    <select id="queryAll" resultType="com.sz.pojo.User">
+         select id,username,password,loginfrequency,logintime,role from user
+    </select>
+</mapper>

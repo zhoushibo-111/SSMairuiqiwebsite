@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.mapper.DevUserMapper">
+    <update id="updateLoginfrequency">
+        update user set loginfrequency = #{loginfrequency}
+        where id = #{id}
+    </update>
+
+    <select id="queryByNamePwd" resultType="com.sz.pojo.User">
+    select id,username, password,role,loginfrequency
+    from user
+    <where>
+<!--      <if test="devCode != null and devCode != ''">-->
+<!--        and dev_code = #{devCode}-->
+<!--      </if>-->
+      <if test="password != null and password != ''">
+        and password = #{password}
+      </if>
+      <if test="username!=null and username!=''">
+          and username =#{username}
+      </if>
+    </where>
+  </select>
+</mapper>

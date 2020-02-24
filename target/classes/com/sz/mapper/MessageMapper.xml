@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.mapper.MessageMapper">
+    <insert id="insertDate">
+        insert into liuyan(name,time,dh,email,nr)
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="name != null">
+                ,#{name}
+            </if>
+            <if test="time != null">
+                ,#{time}
+            </if>
+            <if test="dh != null">
+                ,#{dh}
+            </if>
+            <if test="email != null">
+                ,#{email}
+            </if>
+            <if test="nr != null">
+                ,#{nr}
+            </if>
+        </trim>
+    </insert>
+    <delete id="delMessage" parameterType="java.lang.Integer">
+        delete from liuyan
+        where id = #{id}
+    </delete>
+    <select id="queryAllMessageDate" parameterType="int" resultType="com.sz.pojo.Message">
+        select id,name,time,dh,email,nr from liuyan
+        where id = #{id}
+    </select>
+    <select id="countMessage" resultType="java.lang.Integer">
+         select count(*) from liuyan
+    </select>
+    <select id="queryAll" resultType="com.sz.pojo.Message">
+         select id,name,time,dh,email,nr from liuyan
+        order by time desc
+    </select>
+    <select id="queryMessageDate" resultType="com.sz.pojo.Message">
+        select * from liuyan
+        where id=#{id}
+    </select>
+</mapper>

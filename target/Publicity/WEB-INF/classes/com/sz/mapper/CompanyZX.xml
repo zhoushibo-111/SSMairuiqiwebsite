@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.mapper.CompanyZXMapper">
+    <insert id="addZX" keyColumn="id" useGeneratedKeys="true" parameterType="com.sz.pojo.CompanyZX">
+        insert into company_zx (id,title,zx_nr,zxdata)
+        values (default, #{title},#{zxNr},#{zxdata})
+    </insert>
+    <update id="updZX" parameterType="com.sz.pojo.CompanyZX">
+        update company_zx set title=#{title},zx_nr=#{zxNr},zxdata=#{zxdata} where id=#{id}
+    </update>
+    <delete id="delZXById" parameterType="java.lang.Integer">
+        delete from company_zx where id = #{id}
+    </delete>
+    <select id="queryZXDate"  parameterType="int" resultType="com.sz.pojo.CompanyZX">
+        select id,title,zx_nr,zxdata from company_zx
+        where id = #{id}
+    </select>
+    <select id="countCompanyZX" resultType="java.lang.Integer">
+        select count(*) from company_zx
+    </select>
+    <select id="queryAllZX" resultType="com.sz.pojo.CompanyZX">
+        select * from company_zx
+    </select>
+    <select id="queryCNewDateById" resultType="com.sz.pojo.CompanyZX">
+        select * from company_zx
+        where id = #{id}
+    </select>
+
+
+</mapper>

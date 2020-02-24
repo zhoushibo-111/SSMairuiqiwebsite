@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.mapper.SsmMapper">
+    <select id="queryAllDate"  parameterType="int" resultType="com.sz.pojo.NewLink">
+        select * from new_link
+        where id = #{id}
+    </select>
+    <select id="queryDateById" resultType="com.sz.pojo.NewLink">
+        select * from new_link
+        where id = #{id}
+    </select>
+    <!--更新-->
+    <update id="updLink" parameterType="com.sz.pojo.NewLink">
+    update new_link set text=#{text},link=#{link} where id=#{id}
+</update>
+</mapper>

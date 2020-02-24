@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.mapper.ProductMapper">
+    <resultMap type="com.sz.pojo.Product" id="proCate">
+    <id column="id" property="id"/>
+    <result column="ppname" property="ppname"/>
+    <result column="name" property="name"/>
+    <result column="cd" property="CD"/>
+    <result column="ml" property="ML"/>
+    <result column="productimg" property="productimg"/>
+        <association property="category" javaType="com.sz.pojo.Category">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="queryProductDate"  parameterType="int" resultType="com.sz.pojo.Product">
+        select id, name ,cd,ml from product
+        where id = #{id}
+    </select>
+    <select id="countProduct" resultType="java.lang.Integer">
+        select count(*) from product
+    </select>
+    <insert id="addProduct" keyProperty="id" keyColumn="id" parameterType="com.sz.pojo.Product">
+        insert into product(id,ppname,name,category_id,cd,ml,productimg)
+        values (default ,#{ppname},#{name},#{categoryId},#{CD},#{ML},#{productimg})
+    </insert>
+
+    <!--删除-->
+    <delete id="delProductById" parameterType="java.lang.Integer">
+    delete from product where id = #{id}
+</delete>
+    <select id="queryDateProductById" resultType="com.sz.pojo.Product">
+        select ppname,p.name,c.category,cd,ml from product p , category c
+        where p.category_id = c.id
+        and p.id = #{id}
+    </select>
+    <select id="queryProductFind" resultType="com.sz.pojo.Product">
+        select * from product
+        where id = #{id}
+    </select>
+    <select id="attProduct" parameterType="int" resultMap="proCate">
+        select t1.id,t2.id,ppname,t1.name,t2.category,cd,ml,productimg from product t1 , category t2
+        where t1.category_id=t2.id
+        and t1.id = #{id}
+    </select>
+    <select id="queryAll" resultType="com.sz.pojo.Product">
+        select * from product
+    </select>
+    <select id="queryByName" resultType="com.sz.pojo.Product">
+        select * from product where name like #{name}
+    </select>
+    <update id="updProduct" parameterType="com.sz.pojo.Product">
+         update product set ppname=#{ppname},name=#{name},category_id=#{categoryId},cd=#{cd},ml=#{ml},productimg=#{productimg} where id=#{id}
+    </update>
+
+
+
+</mapper>
