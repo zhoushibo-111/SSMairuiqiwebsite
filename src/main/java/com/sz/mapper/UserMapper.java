@@ -3,6 +3,7 @@ package com.sz.mapper;
 import com.sz.dto.UserDTO;
 import com.sz.pojo.NewLink;
 import com.sz.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,6 +14,9 @@ public interface UserMapper {
      * @return
      */
     User queryUserDate(Integer id);
+    //获取用户list 用@Param 对mapper文件 进行多个参数的传递
+    List<User> getlist(@Param("start") int start, @Param("count") int count);
+    Integer getTotal();  //获取用户总数
     /**
      * 添加用户
      */
