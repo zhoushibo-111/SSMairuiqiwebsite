@@ -1,5 +1,8 @@
 package com.sz.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.sz.pojo.Product;
 import com.sz.pojo.User;
 import com.sz.service.DevUserService;
 import com.sz.service.UserService;
@@ -8,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -23,10 +29,14 @@ public class UserController {
     DevUserService devUserService;
 
     @RequestMapping("/find")
-    public String findAll(Integer id, Model model) {
+    public String findAll(@RequestParam(value = "pageNum" , defaultValue = "1") int pageNum,@RequestParam(value = "pageSize", defaultValue = "5") int pageSize,Integer id, Model model) {
+
         User user = userService.queryDateUserById(id);
+
         if (user.getRole() == 1){
-            model.addAttribute("map", userService.queryUserDate());
+
+            PageInfo<User> pageInfo = userService.queryUserDate(pageNum,pageSize);
+            model.addAttribute("pageInfo", pageInfo);
             return "behindindex";
         }else{
             model.addAttribute("errMsg","权限不足");
