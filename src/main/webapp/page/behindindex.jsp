@@ -219,57 +219,46 @@
                     <th>注册日期</th>
                     <th>操作</th>
                 </tr>
-                <c:forEach items="${map}" var="obj" varStatus="status">
+                <c:forEach var="obj" items="${pageInfo.list}" varStatus="status">
                 <tr>
                     <td>
                         ${status.count}
                     </td>
                     <td>
-                        ${obj.value.username}
+                        ${obj.id}
                     </td>
                     <td>
-                            ${obj.value.password}
+                            ${obj.password}
                     </td>
                     <td>
-                            ${obj.value.loginfrequency}
+                            ${obj.loginfrequency}
                     </td>
                     <td>
-                        <fmt:formatDate value="${obj.value.logintime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                        <fmt:formatDate value="${obj.logintime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                     </td>
                     <td>
-                        <a href="${ctx}/user/findbyid?id=${obj.value.id}">修改</a>
-                        <a href="${ctx}/user/delUser?id=${obj.value.id}" onclick="del()">删除</a>
+                        <a href="${ctx}/user/findbyid?id=${obj.id}">修改</a>
+                        <a href="${ctx}/user/delUser?id=${obj.id}" onclick="del()">删除</a>
                     </td>
                 </tr>
                 </c:forEach>
             </table>
 <%--            --%>
-<%--            <div class="container">--%>
-<%--                <nav aria-label="Page navigation" style="float: right;margin-bottom: auto;margin-right: 10px;">--%>
-<%--                    <ul class="pagination">--%>
-<%--                        <li>--%>
-<%--                            <a href="#" aria-label="Previous">--%>
-<%--                                <span aria-hidden="true">&laquo;</span> &nbsp;--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
-<%--                        <li><a href="#">1</a></li>--%>
-<%--                        &nbsp;--%>
-<%--                        <li><a href="#">2</a></li>--%>
-<%--                        &nbsp;--%>
-<%--                        <li><a href="#">3</a></li>--%>
-<%--                        &nbsp;--%>
-<%--                        <li><a href="#">4</a></li>--%>
-<%--                        &nbsp;--%>
-<%--                        <li><a href="#">5</a></li>--%>
-<%--                        <li>--%>
-<%--                            &nbsp;--%>
-<%--                            <a href="#" aria-label="Next">--%>
-<%--                                <span aria-hidden="true">&raquo;</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
-<%--                </nav>--%>
+            <div class="box-tools pull-right">
+                <ul class="pagination">
+                    <li><a href="javaScript:gotoPage('1')" aria-label="Previous">首页</a></li>
+                    <li><a href="javaScript:gotoPage('${pageInfo.pageNum-1}')">上一页</a></li>
 
+                    <c:forEach begin="1" end="${pageInfo.pages}" var="i" step="1" >
+                        <li class="${i==pageInfo.pageNum ? 'active' : ''}">
+                            <a href="javaScript:gotoPage('${i}')">${i}</a>
+                        </li>
+                        &nbsp;
+                    </c:forEach>
+
+                    <li><a href="javaScript:gotoPage('${pageInfo.pageNum+1}')">下一页</a></li>
+                    <li><a href="javaScript:gotoPage('${pageInfo.total}')" aria-label="Next">尾页</a></li>
+                </ul>
             </div>
             <!-- Page Footer-->
             <footer class="main-footer">
@@ -303,6 +292,19 @@
 <!-- Main File-->
 <script src="../page/behindPage/js/front.js"></script>
 <script>
+    function gotoPage(pageNum) {
+        // 获取每页显示的页码.
+        //var numPerPageSelectVal = $("#numPerPageSelect").val();
+        var numPerPageSelectVal = ${pageInfo.pageSize};
+
+        // 判断页码数 是否在总页码数的范围!
+        if (pageNum>=1 && pageNum<= ${pageInfo.total}){
+            // 跳转到指定的页码.
+            location.href = "${pageContext.request.contextPath}/user/find?id=1/pageNum="+pageNum+"&pageSize="+pageSize;
+        }else {
+            alert("已经到头了!")
+        }
+    }
     function del() {
         if(confirm("确实要删除吗？")){
             alert("已经删除！");
