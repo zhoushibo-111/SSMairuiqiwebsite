@@ -1,10 +1,13 @@
 package com.sz.service;
 
 
+import com.github.pagehelper.PageInfo;
 import com.sz.dto.UserDTO;
 import com.sz.pojo.NewLink;
+import com.sz.pojo.Product;
 import com.sz.pojo.User;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -13,7 +16,9 @@ public interface UserService {
      *
      * @return
      */
-    Map<Integer, User> queryUserDate();
+    PageInfo<User> queryUserDate(int pageNum, int pageSize);
+    List<User> getlist(int start,int count); //获取用户list
+    Integer getTotal(); //获取用户总数
 
     /**
      * 添加用户
