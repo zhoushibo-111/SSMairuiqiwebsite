@@ -24,8 +24,8 @@
         }
         .small{
             position: relative;
-            width: 350px;
-            height: 350px;
+            width: 300px;
+            height: 300px;
         }
         .mask{
             width: 125px;
@@ -38,8 +38,8 @@
             cursor: move;
         }
         .big{
-            width: 350px;
-            height: 350px;
+            width: 450px;
+            height: 450px;
             border: 1px solid #fff;
             position: absolute;
             top: 0;
@@ -57,7 +57,7 @@
         var bigImg = big.children[0];
         var mask = small.children[1];
 
-        //big和mask在鼠标移入small时显示，移出时隐藏
+        //big和mask在鼠标移入small时显示mask和big，移出时隐藏
         small.onmouseenter = function(){
             big.style.display = "block";
             mask.style.display = "block";
@@ -115,11 +115,11 @@
     </ul>
     <div class="box">
     <div class="small">
-        <img src="" width="350"/>
+        <img src="" width="300"/>
         <div class="mask"></div>
     </div>
     <div class="big">
-        <img src=""/>
+        <img src="" width="800"/>
     </div>
     </div>
     <script src="vendor/jquery.min.js" type="text/javascript"></script>
