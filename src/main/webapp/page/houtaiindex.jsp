@@ -145,7 +145,8 @@
             <!-- Sidebar Navidation Menus--><span class="heading">功能列表</span>
             <ul class="list-unstyled">
                 <li class="active">
-                    <a href="${ctx}/user/find?id=${sessionScope.get("user").id}"> <i class="icon-home"></i>用户管理 </a>
+                    <!--${ctx}/user/find?id=${sessionScope.get("user").id}-->
+                    <a href="${ctx}/user/find?id=${sessionScope.get("user").id}" onclick="alr()"> <i class="icon-home"></i>用户管理 </a>
                 </li>
                 <li>
                     <a href="${ctx}/product/find"> <i class="icon-grid"></i>产品管理 </a>
@@ -216,5 +217,11 @@
 
 
 </body>
-
+<script>
+    function alr() {
+        if ("${sessionScope.get("user").id}" != 1){
+            alert("您的权限不足")
+        }
+    }
+</script>
 </html>
