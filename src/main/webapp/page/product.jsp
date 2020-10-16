@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
+<!--产品搜索-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,11 +23,7 @@
             -moz-box-shadow: 10px 10px 10px rgba(0, 0, 0, .5);
             -webkit-box-shadow: 10px 10px 10px rgba(0, 0, 0, .5);
         }
-        /*.input-group .form-control{*/
-        /*    border:2px solid #a1a1a1;*/
-        /*    padding:10px 40px;*/
-        /*    background:#dddddd;*/
-        /*}*/
+
     </style>
 </head>
 
@@ -59,7 +55,7 @@
     <c:forEach items="${productList}" var="list">
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
-                <img src="${ctx}/page/${list.productimg}" alt="...">
+                <a id="picture" href="../page/beforePage/product.html?value=${ctx}/page/${list.productimg}" onclick="pic()"><img src="${ctx}/page/${list.productimg}" alt="..."></a>
                 <div class="caption">
                     <h3>${list.ppname}</h3>
                     <p style="font-size: medium;"><b>${list.name}</b></p>
@@ -101,5 +97,10 @@
 <script src="beforePage/vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 
 </body>
-
+<script>
+    <%--function pic() {--%>
+    <%--    var getval ='${ctx}/page/${list.productimg}';--%>
+    <%--    window.location.href="../page/beforePage/product.html?valus="+getval;--%>
+    <%--});--%>
+</script>
 </html>
