@@ -244,9 +244,10 @@
                 </c:forEach>
             </table>
 <%--            --%>
-            <div class="box-tools pull-right">
+            <span>共 ${pageInfo.pageNum} 页  共 ${pageInfo.total} 条</span>
+            <div class="box-tools pull-right" style="margin-right: 2px">
                 <ul class="pagination">
-                    <li><a href="javaScript:gotoPage('1')" aria-label="Previous">首页</a></li>
+
                     <li><a href="javaScript:gotoPage('${pageInfo.pageNum-1}')">上一页</a></li>
 
                     <c:forEach begin="1" end="${pageInfo.pages}" var="i" step="1" >
@@ -257,7 +258,7 @@
                     </c:forEach>
 
                     <li><a href="javaScript:gotoPage('${pageInfo.pageNum+1}')">下一页</a></li>
-                    <li><a href="javaScript:gotoPage('${pageInfo.total}')" aria-label="Next">尾页</a></li>
+
                 </ul>
             </div>
             <!-- Page Footer-->
@@ -295,12 +296,14 @@
     function gotoPage(pageNum) {
         // 获取每页显示的页码.
         //var numPerPageSelectVal = $("#numPerPageSelect").val();
-        var numPerPageSelectVal = ${pageInfo.pageSize};
+
 
         // 判断页码数 是否在总页码数的范围!
         if (pageNum>=1 && pageNum<= ${pageInfo.total}){
+            var numPerPageSelectVal = ${pageInfo.pageSize};
             // 跳转到指定的页码.
-            location.href = "${pageContext.request.contextPath}/user/find?id=1/pageNum="+pageNum+"&pageSize="+pageSize;
+            location.href = "${ctx}/user/find?id="+"${sessionScope.get("user").id}"+"&pageNum="+pageNum+"&pageSize="+numPerPageSelectVal;
+            console.log(location.href)
         }else {
             alert("已经到头了!")
         }
