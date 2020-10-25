@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -23,7 +24,14 @@ public class MessageController {
      * @return
      */
     @RequestMapping("/find")
-    public String findAll(Model model){
+    public String findAll(Model model, HttpServletRequest request){
+        //获取session
+        HttpSession  session = request.getSession();
+
+        if(session.getAttribute("user")==null){
+            model.addAttribute("map",null);
+            return "login";
+        }
         model.addAttribute("map", messageService.queryAllMessageDate());
         return "Message";
     }
