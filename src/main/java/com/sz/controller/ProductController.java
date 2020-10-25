@@ -1,6 +1,8 @@
 package com.sz.controller;
 
 import com.sz.pojo.Product;
+import com.sz.pojo.User;
+import com.sz.service.DevUserService;
 import com.sz.service.ProductService;
 import com.sz.util.Onloadimg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Enumeration;
 import java.util.UUID;
 
 @Controller
@@ -24,9 +30,19 @@ public class ProductController {
      */
     @Autowired
     ProductService productService;
-
+    @Autowired
+    DevUserService devUserService;
     @RequestMapping("/find")
-    public String findAll(Model model){
+    public String findAll(Model model,HttpServletRequest request){
+
+        //获取session
+        HttpSession  session = request.getSession();
+
+        if(session.getAttribute("user")==null){
+            model.addAttribute("map",null);
+            return "login";
+        }
+
         model.addAttribute("map", productService.queryProductDate());
         return "producttable";
     }
