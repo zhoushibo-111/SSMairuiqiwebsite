@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/link")
 public class SsmController {
@@ -20,7 +23,14 @@ public class SsmController {
     SsmService ssmService;
 
     @RequestMapping("/find")
-    public String findAll(Model model){
+    public String findAll(Model model, HttpServletRequest request){
+        //获取session
+        HttpSession session = request.getSession();
+
+        if(session.getAttribute("user")==null){
+            model.addAttribute("map",null);
+            return "login";
+        }
         model.addAttribute("map", ssmService.queryAllDate());
         return "link";
     }
