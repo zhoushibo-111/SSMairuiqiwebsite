@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +30,13 @@ public class UserController {
     DevUserService devUserService;
 
     @RequestMapping("/find")
-    public String findAll(@RequestParam(value = "pageNum" , defaultValue = "1") int pageNum,@RequestParam(value = "pageSize", defaultValue = "5") int pageSize,Integer id, Model model) {
-
+    public String findAll(@RequestParam(value = "pageNum" , defaultValue = "1") int pageNum,@RequestParam(value = "pageSize", defaultValue = "5") int pageSize,Integer id, Model model,HttpServletRequest request) {
+        //获取session
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user")==null){
+            model.addAttribute("map",null);
+            return "login";
+        }
         User user = userService.queryDateUserById(id);
 
         if (user.getRole() == 1){
