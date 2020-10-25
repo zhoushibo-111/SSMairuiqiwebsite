@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.PublicKey;
 import java.util.Date;
 
@@ -21,8 +23,14 @@ public class CompanyNewController {
     @Autowired
     CompanyNewService companyNewService;
     @RequestMapping("/find")
-    public String findAll(Model model){
+    public String findAll(Model model, HttpServletRequest request){
+        //获取session
+        HttpSession session = request.getSession();
 
+        if(session.getAttribute("user")==null){
+            model.addAttribute("map",null);
+            return "login";
+        }
         model.addAttribute("map", companyNewService.queryCNewDate());
         return "forms";
     }
