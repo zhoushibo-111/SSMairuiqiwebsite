@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -24,9 +25,16 @@ public class CompanyZXController {
     CompanyZXService companyZXService;
 
     @RequestMapping("/find")
-    public String findAll(Model model){
+    public String findAll(Model model, HttpServletRequest request){
+        //获取session
+        HttpSession  session = request.getSession();
+
+        if(session.getAttribute("user")==null){
+            model.addAttribute("map",null);
+            return "login";
+        }
        model.addAttribute("map",companyZXService.queryCXZDate());
-        System.out.println(companyZXService.queryCXZDate());
+
         return "CompanyZX";
     }
     /**
