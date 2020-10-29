@@ -5,6 +5,7 @@ import com.sz.mapper.DevUserMapper;
 import com.sz.mapper.MessageMapper;
 import com.sz.pojo.User;
 import com.sz.service.DevUserService;
+import com.sz.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,9 @@ public class DevUserServiceImpl implements DevUserService {
 
     @Override
     public User login(User user) {
+        user.setPassword(MD5Util.MD5Jie(user.password));
         List<User> devUsers = devUserMapper.queryByNamePwd(user);
+
         if (devUsers != null && devUsers.size() == 1) {
             return devUsers.get(0);
          }
