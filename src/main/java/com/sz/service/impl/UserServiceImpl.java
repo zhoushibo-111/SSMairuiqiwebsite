@@ -6,6 +6,7 @@ import com.sz.mapper.UserMapper;
 import com.sz.pojo.Product;
 import com.sz.pojo.User;
 import com.sz.service.UserService;
+import com.sz.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService {
     public PageInfo<User> queryUserDate(int pageNum, int pageSize) {
         PageHelper.startPage(1, 5);
        List<User> list = userMapper.queryAll();
+       for(User u : list){
+           System.out.println("解密的：" + MD5Util.MD5Jie(u.password));
+       }
        //Map<Integer, User> map = new HashMap<>();
 //       for (int i = 0; i < list.size(); i ++){
 //           map.put(list.get(i).getId(), list.get(i));
@@ -48,7 +52,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(User user) {
         user.setLoginfrequency(0);
-
+        user.setPassword(MD5Util.MD5Jie(user.password));
         userMapper.addUser(user);
     }
 
