@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.sz.util.JavaMail;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -47,7 +49,7 @@ public class MessageController {
      * @return
      */
     @RequestMapping("/insertdata")
-    public String insertData(String name, String dh, String email, String nr,Model model){
+    public String insertData(String name, String dh, String email, String nr,Model model) throws MessagingException {
         Message message = new Message();
         message.setDh(dh);
         message.setEmail(email);
@@ -55,6 +57,8 @@ public class MessageController {
         message.setNr(nr);
         message.setTime(new Date());
         boolean flag = messageService.insertData(message);
+        JavaMail mail = new JavaMail();
+        mail.sendMail(name,email,nr);
         model.addAttribute("flag", flag);
         return "redirect:/link/findBefore";
     }
