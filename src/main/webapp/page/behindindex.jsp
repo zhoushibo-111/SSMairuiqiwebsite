@@ -12,19 +12,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="../page/behindPage/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/page/behindPage/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="../page/behindPage/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${ctx}/page/behindPage/vendor/font-awesome/css/font-awesome.min.css">
     <!-- Fontastic Custom icon font-->
-    <link rel="stylesheet" href="../page/behindPage/css/fontastic.css">
+    <link rel="stylesheet" href="${ctx}/page/behindPage/css/fontastic.css">
     <!-- Google fonts - Poppins -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../page/behindPage/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="${ctx}/page/behindPage/css/style.default.css" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../page/behindPage/css/custom.css">
+    <link rel="stylesheet" href="${ctx}/page/behindPage/css/custom.css">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="../page/behindPage/img/favicon.ico">
+    <link rel="shortcut icon" href="${ctx}/page/behindPage/img/favicon.ico">
 
     <!-- Tweaks for older IEs-->
     <!--[if lt IE 9]>
@@ -65,6 +65,9 @@
         h1.h4{
             text-shadow: 5px 5px 5px #FF0000;
         }
+        ul li .page-link:hover{
+            color: #0000FF;
+        }
     </style>
 </head>
 
@@ -85,7 +88,7 @@
                     <!-- Navbar Header-->
                     <div class="navbar-header">
                         <!-- Navbar Brand -->
-                        <a href="../page/behindindex.jsp" class="navbar-brand d-none d-sm-inline-block">
+                        <a href="${ctx}/page/behindindex.jsp" class="navbar-brand d-none d-sm-inline-block">
                             <div class="brand-text d-none d-lg-inline-block"><span>爱蕊崎</span><strong>后台管理</strong></div>
                             <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div>
                         </a>
@@ -225,7 +228,7 @@
                         ${status.count}
                     </td>
                     <td>
-                        ${obj.id}
+                        ${obj.username}
                     </td>
                     <td>
                             ${obj.password}
@@ -244,23 +247,34 @@
                 </c:forEach>
             </table>
 <%--            --%>
-            <span>共 ${pageInfo.pageNum} 页  共 ${pageInfo.total} 条</span>
-            <div class="box-tools pull-right" style="margin-right: 2px">
+            <span>第 ${pageInfo.pageNum} 页  共 ${pageInfo.total} 条</span>
+<%--            <div class="box-tools pull-right" style="margin-right: 2px">--%>
+<%--                <ul class="pagination">--%>
+
+<%--                    <li><a href="javaScript:gotoPage('${pageInfo.pageNum-1}')">上一页</a></li>--%>
+
+<%--                    <c:forEach begin="1" end="${pageInfo.pages}" var="i" step="1" >--%>
+<%--                        <li class="${i==pageInfo.pageNum ? 'active' : ''}">--%>
+<%--                            <a href="javaScript:gotoPage('${i}')">${i}</a>--%>
+<%--                        </li>--%>
+<%--                        &nbsp;--%>
+<%--                    </c:forEach>--%>
+
+<%--                    <li><a href="javaScript:gotoPage('${pageInfo.pageNum+1}')">下一页</a></li>--%>
+
+<%--                </ul>--%>
+<%--            </div>--%>
+            <nav class="box-tools pull-right" aria-label="Page navigation example" style="margin-right: 2px">
                 <ul class="pagination">
-
-                    <li><a href="javaScript:gotoPage('${pageInfo.pageNum-1}')">上一页</a></li>
-
+                    <li class="page-item" id="previous"><a class="page-link" href="javaScript:gotoPage('${pageInfo.pageNum-1}')">上一页</a></li>
                     <c:forEach begin="1" end="${pageInfo.pages}" var="i" step="1" >
-                        <li class="${i==pageInfo.pageNum ? 'active' : ''}">
-                            <a href="javaScript:gotoPage('${i}')">${i}</a>
-                        </li>
-                        &nbsp;
+                                                <li class="page-item">
+                                                    <a class="page-link" href="javaScript:gotoPage('${i}')">${i}</a>
+                                                </li>
                     </c:forEach>
-
-                    <li><a href="javaScript:gotoPage('${pageInfo.pageNum+1}')">下一页</a></li>
-
+                    <li id="next" class="page-item"><a class="page-link" href="javaScript:gotoPage('${pageInfo.pageNum+1}')">下一页</a></li>
                 </ul>
-            </div>
+            </nav>
             <!-- Page Footer-->
             <footer class="main-footer">
                 <div class="container-fluid">
@@ -281,18 +295,19 @@
 
 </div>
 <!-- JavaScript files-->
-<script src="../page/behindPage/vendor/jquery/jquery.min.js"></script>
-<script src="../page/behindPage/vendor/popper.js/umd/popper.min.js">
+<script src="${ctx}/page/behindPage/vendor/jquery/jquery.min.js"></script>
+<script src="${ctx}/page/behindPage/vendor/popper.js/umd/popper.min.js">
 </script>
-<script src="../page/behindPage/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="../page/behindPage/vendor/jquery.cookie/jquery.cookie.js">
+<script src="${ctx}/page/behindPage/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="${ctx}/page/behindPage/vendor/jquery.cookie/jquery.cookie.js">
 </script>
-<script src="../page/behindPage/vendor/chart.js/Chart.min.js"></script>
-<script src="../page/behindPage/vendor/jquery-validation/jquery.validate.min.js"></script>
-<script src="../page/behindPage/js/charts-home.js"></script>
+<%--<script src="${ctx}/page/behindPage/vendor/chart.js/Chart.min.js"></script>--%>
+<script src="${ctx}/page/behindPage/vendor/jquery-validation/jquery.validate.min.js"></script>
+<%--<script src="${ctx}/page/behindPage/js/charts-home.js"></script>--%>
 <!-- Main File-->
-<script src="../page/behindPage/js/front.js"></script>
+<script src="${ctx}/page/behindPage/js/front.js"></script>
 <script>
+    ifpage()
     function gotoPage(pageNum) {
         // 获取每页显示的页码.
         //var numPerPageSelectVal = $("#numPerPageSelect").val();
@@ -302,10 +317,19 @@
         if (pageNum>=1 && pageNum<= ${pageInfo.total}){
             var numPerPageSelectVal = ${pageInfo.pageSize};
             // 跳转到指定的页码.
-            location.href = "${ctx}/user/find?id="+"${sessionScope.get("user").id}"+"&pageNum="+pageNum+"&pageSize="+numPerPageSelectVal;
-            console.log(location.href)
+            location.href = "${ctx}/user/find?id="+"${sessionScope.get("user").id}"+"&pageNum="+pageNum+"&pageSize="+"${pageInfo.pageSize}";
+
         }else {
             alert("已经到头了!")
+        }
+    }
+    function ifpage(){
+
+        if("${pageInfo.pageNum-1}"<1){
+            $("#previous").attr("class","page-item disabled")
+        }
+        if("${pageInfo.pageNum}">"${pageInfo.total}"/"${pageInfo.pageSize}"){
+            $("#next").attr("class","page-item disabled")
         }
     }
     function del() {
