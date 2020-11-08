@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public PageInfo<User> queryUserDate(int pageNum, int pageSize) {
-        PageHelper.startPage(1, 5);
+        PageHelper.startPage(pageNum, pageSize);
        List<User> list = userMapper.queryAll();
        for(User u : list){
            System.out.println("解密的：" + MD5Util.MD5Jie(u.password));
